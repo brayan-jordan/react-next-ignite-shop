@@ -8,6 +8,9 @@ import Image from "next/image";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { stripe } from "../../lib/stripe";
 import Stripe from "stripe";
+import axios from "axios";
+import { useState } from "react";
+import Head from "next/head";
 
 interface ProductProps {
   product: {
@@ -15,27 +18,60 @@ interface ProductProps {
     description: string;
     name: string;
     imageUrl: string;
+    defaultPriceId: string;
     price: string;
   };
 }
 
 export default function Product({ product }: ProductProps) {
+  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
+    useState(false);
+
+  async function handleBuyProduct() {
+    try {
+      setIsCreatingCheckoutSession(true);
+
+      const response = await axios.post("/api/checkout", {
+        priceId: product.defaultPriceId,
+      });
+
+      const { checkoutUrl } = response.data;
+
+      window.location.href = checkoutUrl;
+    } catch (err) {
+      setIsCreatingCheckoutSession(false);
+
+      alert("Falha ao redirecionar para o checkout");
+    }
+  }
+
   return (
-    <ProductContainer>
-      <ImageContainer>
-        <Image src={product.imageUrl} width={520} height={480} alt="" />
-      </ImageContainer>
+    <>
+      <Head>
+        <title>{product.name} | Ignite Shop</title>
+      </Head>
 
-      <ProductDetails>
-        <h1>{product.name}</h1>
+      <ProductContainer>
+        <ImageContainer>
+          <Image src={product.imageUrl} width={520} height={480} alt="" />
+        </ImageContainer>
 
-        <span>{product.price}</span>
+        <ProductDetails>
+          <h1>{product.name}</h1>
 
-        <p>{product.description}</p>
+          <span>{product.price}</span>
 
-        <button>Comprar agora</button>
-      </ProductDetails>
-    </ProductContainer>
+          <p>{product.description}</p>
+
+          <button
+            disabled={isCreatingCheckoutSession}
+            onClick={handleBuyProduct}
+          >
+            Comprar agora
+          </button>
+        </ProductDetails>
+      </ProductContainer>
+    </>
   );
 }
 
@@ -70,6 +106,7 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
         name: product.name,
         imageUrl: product.images[0],
         description: product.description,
+        defaultPriceId: price.id,
         price: new Intl.NumberFormat("pt-BR", {
           style: "currency",
           currency: "BRL",
