@@ -26,10 +26,10 @@ $ npm run dev
    
 ## Imagens do fluxo do projeto
 1. Imagem da tela de home do projeto (com carrossel lateral para scroll dos itens)
-![Imagem da home](https://github.com/brayan-jordan/react-next-ignite-shop/blob/master/docs/home.png)
+![Imagem da home](https://raw.githubusercontent.com/brayan-jordan/react-next-ignite-shop/main/docs/home.png)
 2. Imagem da tela de produto selecionado
-![Imagem de produto selecionado](https://github.com/brayan-jordan/react-next-ignite-shop/blob/master/docs/product.png)
+![Imagem de produto selecionado](https://raw.githubusercontent.com/brayan-jordan/react-next-ignite-shop/main/docs/product.png)
 3. Redirecionamento ao clicar em comprar para confirmação de compra no Stripe
-![Imagem da tela de confirmação de compra no Stripe](https://github.com/brayan-jordan/react-next-ignite-shop/blob/master/docs/checkout.png)
+![Imagem da tela de confirmação de compra no Stripe](https://raw.githubusercontent.com/brayan-jordan/react-next-ignite-shop/main/docs/checkout.png)
 4. Imagem da tela ao confirmar os dados do pagamento
-![Imagem da tela de de compra confirmada](https://github.com/brayan-jordan/react-next-ignite-shop/blob/master/docs/success.png)
+![Imagem da tela de de compra confirmada](https://raw.githubusercontent.com/brayan-jordan/react-next-ignite-shop/main/docs/success.png)
